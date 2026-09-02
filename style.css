@@ -1,0 +1,1282 @@
+/* =========================
+   CONFIGURAÇÕES GERAIS
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #18354b;
+    background: #f8fbfc;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.header {
+    height: 74px;
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 30;
+
+    box-shadow: 0 3px 20px #18354b14;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+    color: #176b72;
+}
+
+.logo span {
+    display: inline-grid;
+
+    place-items: center;
+
+    background: #e1f5f2;
+
+    border-radius: 10px;
+
+    width: 35px;
+    height: 35px;
+
+    margin-right: 7px;
+}
+
+.header nav {
+    display: flex;
+    gap: 20px;
+
+    font-size: 13px;
+
+    color: #536b7a;
+}
+
+.header nav a {
+    transition: 0.2s;
+}
+
+.header nav a:hover {
+    color: #176b72;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.btn,
+.access {
+    border: 0;
+
+    border-radius: 11px;
+
+    padding: 12px 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background: #176b72;
+
+    color: white;
+
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.92);
+}
+
+.access {
+    background: #e9f6f4;
+    color: #176b72;
+}
+
+.outline {
+    background: #ffffff1c;
+
+    border: 1px solid #ffffff70;
+}
+
+
+/* =========================
+   HERO / INÍCIO
+========================= */
+
+.hero {
+    height: 620px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 70px 8%;
+
+    overflow: hidden;
+
+    background: #183b51;
+}
+
+.hero-bg {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            #123449ed 0%,
+            #123449b0 55%,
+            #12344935 100%
+        ),
+        url("hospital-bg.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+}
+
+.hero-content {
+    position: relative;
+
+    z-index: 1;
+
+    color: #ffffff;
+
+    max-width: 690px;
+}
+
+.tag {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 800;
+
+    color: #3aa6a7;
+}
+
+.hero .tag {
+    color: #8fe0dc;
+}
+
+.hero h1 {
+    font-size: 57px;
+
+    line-height: 1.04;
+
+    margin: 15px 0;
+}
+
+.hero h1 strong {
+    color: #8fe0dc;
+}
+
+.hero p {
+    font-size: 18px;
+
+    line-height: 1.65;
+
+    color: #e4edf1;
+
+    max-width: 620px;
+}
+
+.hero-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 27px;
+}
+
+.hero-photo-tip {
+    position: absolute;
+
+    right: 7%;
+    bottom: 30px;
+
+    background: #ffffff;
+
+    color: #4c6372;
+
+    padding: 13px 16px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   SEÇÕES
+========================= */
+
+.section {
+    padding: 80px 8%;
+}
+
+.quick {
+    background: #ffffff;
+
+    padding: 65px 8%;
+}
+
+.section-head {
+    max-width: 850px;
+
+    margin-bottom: 30px;
+}
+
+.section-head.center {
+    text-align: center;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-head h2,
+.sub-title h2 {
+    font-size: 36px;
+
+    margin: 10px 0;
+
+    color: #18354b;
+}
+
+.section-head p {
+    color: #687d8a;
+
+    line-height: 1.6;
+}
+
+.light {
+    background: #edf6f7;
+}
+
+
+/* =========================
+   ACESSO RÁPIDO
+========================= */
+
+.quick-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.quick-card {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+
+    gap: 3px 13px;
+
+    padding: 20px;
+
+    border: 1px solid #dfebee;
+
+    border-radius: 16px;
+
+    color: #18354b;
+
+    background: #ffffff;
+
+    transition: 0.2s;
+}
+
+.quick-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 30px #18354b12;
+}
+
+.quick-card span {
+    grid-row: span 2;
+
+    font-size: 27px;
+}
+
+.quick-card small {
+    color: #71838e;
+
+    line-height: 1.4;
+}
+
+.quick-card.danger {
+    border-left: 4px solid #d95656;
+}
+
+
+/* =========================
+   EMERGÊNCIA
+========================= */
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 17px;
+}
+
+.feature-grid article {
+    background: #ffffff;
+
+    padding: 25px;
+
+    border: 1px solid #dfebee;
+
+    border-radius: 19px;
+
+    transition: 0.2s;
+}
+
+.feature-grid article:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 12px 30px #18354b12;
+}
+
+.feature-grid article > span {
+    font-size: 32px;
+}
+
+.feature-grid h3 {
+    margin: 13px 0 7px;
+}
+
+.feature-grid p {
+    color: #687d8a;
+
+    line-height: 1.55;
+
+    min-height: 65px;
+}
+
+.feature-grid button,
+.health-grid button {
+    border: 0;
+
+    background: #e8f5f3;
+
+    color: #176b72;
+
+    border-radius: 10px;
+
+    padding: 10px 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.red {
+    color: #cf5a5a;
+}
+
+
+/* =========================
+   FILTROS
+========================= */
+
+.filters {
+    display: flex;
+
+    gap: 12px;
+
+    max-width: 900px;
+
+    margin: auto auto 20px;
+}
+
+.filters input,
+.filters select,
+.appointment input,
+.appointment select,
+.admin label input,
+.admin label select {
+    border: 1px solid #d5e2e6;
+
+    border-radius: 11px;
+
+    padding: 13px;
+
+    background: #ffffff;
+
+    outline: none;
+}
+
+.filters input {
+    flex: 1;
+}
+
+.filters input:focus,
+.filters select:focus,
+.appointment input:focus,
+.appointment select:focus {
+    border-color: #68b7b4;
+}
+
+
+/* =========================
+   UNIDADES
+========================= */
+
+.units {
+    max-width: 1000px;
+
+    margin: auto;
+
+    display: grid;
+
+    gap: 12px;
+}
+
+.unit {
+    background: #ffffff;
+
+    border: 1px solid #dfeaec;
+
+    border-radius: 16px;
+
+    padding: 18px;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 15px;
+
+    align-items: center;
+}
+
+.unit h3 {
+    margin: 0 0 6px;
+}
+
+.unit p {
+    margin: 3px 0;
+
+    color: #71828c;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   LOTAÇÃO
+========================= */
+
+.lot {
+    font-weight: 800;
+
+    padding: 8px 11px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+.lot.baixa {
+    background: #ddf5e9;
+
+    color: #15704e;
+}
+
+.lot.media {
+    background: #fff2c8;
+
+    color: #8a6810;
+}
+
+.lot.alta {
+    background: #fde0e0;
+
+    color: #a63f3f;
+}
+
+
+/* =========================
+   PROFISSIONAIS
+========================= */
+
+.sub-title {
+    margin: 55px 0 22px;
+}
+
+.professional-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.professional {
+    background: #ffffff;
+
+    border: 1px solid #dfebee;
+
+    border-radius: 15px;
+
+    padding: 17px;
+
+    min-height: 150px;
+}
+
+.professional .avatar {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background: #e1f2f1;
+
+    color: #176b72;
+
+    font-weight: 800;
+
+    float: left;
+
+    margin-right: 12px;
+}
+
+.professional h3 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.professional p {
+    font-size: 13px;
+
+    color: #73848f;
+
+    line-height: 1.5;
+}
+
+.available {
+    color: #16815e;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   ATENDIMENTO DOMICILIAR
+========================= */
+
+.home-care {
+    margin: 40px auto 0;
+
+    max-width: 1000px;
+
+    background: #183b51;
+
+    color: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 28px 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.home-care h2 {
+    margin: 7px 0;
+}
+
+.home-care p {
+    color: #cddde3;
+}
+
+
+/* =========================
+   AGENDAMENTO
+========================= */
+
+.appointment {
+    max-width: 1000px;
+
+    margin: auto;
+
+    background: #ffffff;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 13px;
+}
+
+.appointment button {
+    grid-column: 1 / -1;
+}
+
+.appointment p {
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    color: #16815e;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   SAÚDE
+========================= */
+
+.health-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 17px;
+}
+
+.health-grid article {
+    background: #ffffff;
+
+    padding: 25px;
+
+    border: 1px solid #dfebee;
+
+    border-radius: 19px;
+
+    transition: 0.2s;
+}
+
+.health-grid article:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 12px 30px #18354b12;
+}
+
+.health-grid article > span {
+    font-size: 32px;
+}
+
+.health-grid h3 {
+    margin: 13px 0 7px;
+}
+
+.health-grid p {
+    color: #687d8a;
+
+    line-height: 1.55;
+
+    min-height: 70px;
+}
+
+
+/* =========================
+   MEU SUS
+========================= */
+
+.patient-layout {
+    display: grid;
+
+    grid-template-columns: 280px 1fr;
+
+    gap: 20px;
+
+    max-width: 1000px;
+
+    margin: auto;
+}
+
+.profile {
+    background: #183b51;
+
+    color: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+}
+
+.profile .avatar {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: #8ed8d4;
+
+    color: #173b52;
+
+    display: grid;
+
+    place-items: center;
+
+    font-weight: 800;
+
+    margin: auto;
+
+    font-size: 20px;
+}
+
+.profile p {
+    color: #c8d9df;
+}
+
+.card-number {
+    background: #ffffff15;
+
+    border: 1px solid #ffffff25;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    text-align: left;
+
+    margin-top: 20px;
+}
+
+.documents {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.documents button {
+    border: 1px solid #dce8eb;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    text-align: left;
+
+    padding: 21px;
+
+    font-weight: 700;
+
+    color: #18354b;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.documents button:hover {
+    border-color: #86c9c5;
+
+    background: #f5fbfa;
+}
+
+.security {
+    max-width: 1000px;
+
+    margin: 20px auto 0;
+
+    padding: 15px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    color: #627784;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   CUIDADORES
+========================= */
+
+.care-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+.care {
+    background: #ffffff;
+
+    border: 1px solid #dfeaec;
+
+    border-radius: 18px;
+
+    padding: 22px;
+}
+
+.care-avatar {
+    width: 52px;
+    height: 52px;
+
+    background: #e5f4f2;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 22px;
+
+    float: left;
+
+    margin-right: 12px;
+}
+
+.care h3 {
+    margin: 4px 0;
+}
+
+.care p {
+    clear: both;
+
+    padding-top: 13px;
+
+    color: #71838e;
+}
+
+.verified {
+    color: #16815e;
+
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   ADMINISTRADOR
+========================= */
+
+.admin-section {
+    margin: 0 8%;
+
+    padding: 30px 35px;
+
+    background: #e4eff2;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.admin-section h2 {
+    margin: 8px 0;
+}
+
+.admin-section p {
+    color: #647a87;
+}
+
+
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback {
+    background: #ffffff;
+}
+
+.feedback-box {
+    max-width: 580px;
+
+    margin: auto;
+
+    text-align: center;
+}
+
+.feedback-box textarea {
+    width: 100%;
+
+    height: 120px;
+
+    border: 1px solid #d5e2e6;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    margin: 12px 0;
+
+    resize: vertical;
+
+    outline: none;
+}
+
+.feedback-box textarea:focus {
+    border-color: #68b7b4;
+}
+
+#stars {
+    margin: 8px;
+}
+
+#stars button {
+    border: 0;
+
+    background: none;
+
+    font-size: 35px;
+
+    color: #ccd5d9;
+
+    cursor: pointer;
+}
+
+#stars button.active {
+    color: #efb83f;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: #102f4688;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 100;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    background: #ffffff;
+
+    width: min(480px, 100%);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    position: relative;
+
+    box-shadow: 0 20px 60px #0004;
+}
+
+.modal-box h2 {
+    margin: 10px 0;
+}
+
+.modal-box p {
+    color: #607684;
+
+    line-height: 1.6;
+}
+
+.close {
+    position: absolute;
+
+    right: 15px;
+    top: 10px;
+
+    border: 0;
+
+    background: none;
+
+    font-size: 28px;
+
+    color: #687b87;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   ADMIN MODAL
+========================= */
+
+.admin label {
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin: 12px 0;
+}
+
+.admin label select,
+.admin label input {
+    width: 100%;
+
+    margin-top: 6px;
+}
+
+.admin .btn {
+    width: 100%;
+}
+
+.admin-note {
+    background: #edf6f7;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    color: #647986;
+
+    margin-top: 15px;
+}
+
+
+/* =========================
+   RODAPÉ
+========================= */
+
+footer {
+    background: #102f46;
+
+    color: #bdd0d8;
+
+    padding: 32px 8%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+footer .logo {
+    color: #ffffff;
+}
+
+
+/* =========================
+   MODO FÁCIL PARA IDOSOS
+========================= */
+
+.easy-mode {
+    font-size: 115%;
+}
+
+.easy-mode .header {
+    height: 88px;
+}
+
+.easy-mode .header nav {
+    font-size: 16px;
+}
+
+.easy-mode .btn,
+.easy-mode .access {
+    padding: 15px 20px;
+}
+
+.easy-mode .quick-card,
+.easy-mode .documents button {
+    padding: 25px;
+}
+
+.easy-mode h2 {
+    font-size: 42px;
+}
+
+
+/* =========================
+   RESPONSIVIDADE
+========================= */
+
+@media (max-width: 900px) {
+
+    .header nav {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 44px;
+    }
+
+    .quick-grid,
+    .feature-grid,
+    .care-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .health-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .professional-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .patient-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-care {
+        display: block;
+    }
+
+    .home-care .btn {
+        margin-top: 10px;
+    }
+
+    .admin-section {
+        display: block;
+    }
+
+    .appointment {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-photo-tip {
+        right: 5%;
+        left: 5%;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .quick-grid,
+    .feature-grid,
+    .health-grid,
+    .care-grid,
+    .professional-grid,
+    .documents {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        height: 650px;
+
+        padding: 50px 6%;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .hero-buttons .btn {
+        text-align: center;
+    }
+
+    .hero-photo-tip {
+        font-size: 10px;
+    }
+
+    .section,
+    .quick {
+        padding: 55px 6%;
+    }
+
+    .section-head h2 {
+        font-size: 30px;
+    }
+
+    .filters {
+        display: block;
+    }
+
+    .filters input,
+    .filters select {
+        width: 100%;
+
+        margin-bottom: 8px;
+    }
+
+    .unit {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        display: block;
+    }
+
+    .header {
+        padding: 0 5%;
+    }
+
+}
