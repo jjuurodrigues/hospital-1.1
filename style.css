@@ -1280,3 +1280,127 @@ footer .logo {
     }
 
 }
+/* =========================
+   VÍDEOS EDUCATIVOS
+========================= */
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 35px;
+}
+
+.video-card {
+    background: #ffffff;
+    border: 1px solid #dfebee;
+    border-radius: 19px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px #18354b0d;
+    transition: 0.2s;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px #18354b12;
+}
+
+.video-player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #183b51;
+}
+
+.video-player iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-info {
+    padding: 20px;
+}
+
+.video-info h3 {
+    margin: 0 0 10px;
+    color: #176b72;
+    font-size: 18px;
+}
+
+.video-info p {
+    margin: 0;
+    color: #687d8a;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+#videos {
+    scroll-margin-top: 90px;
+}
+
+/* VÍDEOS NO CELULAR */
+
+@media (max-width: 900px) {
+    .videos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.videos-educativos {
+    min-width: 0;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.video-player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #000;
+}
+
+.video-player iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media (max-width: 600px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.videos-grid iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .videos-grid {
+        grid-template-columns: 1fr;
+    }
+}

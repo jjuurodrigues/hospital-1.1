@@ -984,3 +984,15 @@ renderCaregivers();
 
 updateProfessionalSelect();
 alert("o JavaScript está funcioando!");
+function toggleVideos() {
+    const listaVideos = document.getElementById("listaVideos");
+    const botaoVideos = document.getElementById("botaoVideos");
+
+    if (listaVideos.style.display === "none") {
+        listaVideos.style.display = "grid";
+        botaoVideos.textContent = "Ocultar vídeos";
+    } else {
+        listaVideos.style.display = "none";
+        botaoVideos.textContent = "Ver vídeos";
+    }
+}
