@@ -1,1024 +1,451 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>VivaSUS | Saúde em um só lugar</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- CABEÇALHO -->
-    <header class="header">
+<header class="header">
+    <a href="#inicio" class="logo"><span>✚</span> VivaSUS</a>
 
-        <a href="#inicio" class="logo">
-            <span>✚</span> VivaSUS
+    <nav>
+        <a href="#inicio">Início</a>
+        <a href="#emergencia">Emergência</a>
+        <a href="#atendimento">Atendimento</a>
+        <a href="#saude">Saúde</a>
+        <a href="#meusus">Meu SUS</a>
+        <a href="#cuidadores">Cuidadores</a>
+    </nav>
+
+    <div class="actions">
+        <button id="easyBtn" class="access" type="button">A+</button>
+        <button id="loginBtn" class="btn" type="button">Entrar</button>
+    </div>
+</header>
+
+<main>
+
+<section id="inicio" class="hero">
+    <div class="hero-content">
+        <span class="tag">PLATAFORMA DIGITAL DE SAÚDE</span>
+        <h1>Como podemos<br><strong>ajudar você?</strong></h1>
+        <p>Encontre atendimento, consulte medicamentos, acompanhe informações de saúde e acesse seus documentos em um só lugar.</p>
+
+        <div class="hero-buttons">
+            <a href="#atendimento" class="btn">Encontrar atendimento</a>
+            <a href="#saude" class="btn outline">Consultar medicamentos</a>
+        </div>
+    </div>
+</section>
+
+<section class="quick">
+    <div class="section-head">
+        <span class="tag">ACESSO RÁPIDO</span>
+        <h2>Como podemos ajudar?</h2>
+    </div>
+
+    <div class="quick-grid">
+        <a href="#emergencia" class="quick-card danger">
+            <span>🔴</span>
+            <div><b>Emergência</b><small>Primeiros socorros</small></div>
         </a>
 
-        <nav>
-            <a href="#inicio">Início</a>
-            <a href="#emergencia">Emergência</a>
-            <a href="#atendimento">Atendimento</a>
-            <a href="#saude">Saúde</a>
-            <a href="#meusus">Meu SUS</a>
-            <a href="#cuidadores">Cuidadores</a>
-        </nav>
+        <a href="#atendimento" class="quick-card">
+            <span>🏥</span>
+            <div><b>Atendimento</b><small>Unidades e profissionais</small></div>
+        </a>
 
-        <div class="actions">
-            <button id="easyBtn" class="access">A+</button>
-            <button id="loginBtn" class="btn">Entrar</button>
+        <a href="#saude" class="quick-card">
+            <span>💊</span>
+            <div><b>Medicamentos</b><small>Consulte disponibilidade</small></div>
+        </a>
+
+        <a href="#meusus" class="quick-card">
+            <span>📄</span>
+            <div><b>Meus documentos</b><small>Exames e laudos</small></div>
+        </a>
+
+        <a href="#saude" class="quick-card">
+            <span>💉</span>
+            <div><b>Vacinação</b><small>Informações sobre vacinas</small></div>
+        </a>
+
+        <a href="#atendimentoDomiciliar" class="quick-card">
+            <span>🏠</span>
+            <div><b>Atendimento domiciliar</b><small>Solicite uma avaliação</small></div>
+        </a>
+    </div>
+</section>
+
+<section id="emergencia" class="section">
+    <div class="section-head">
+        <span class="tag red">EMERGÊNCIA</span>
+        <h2>Precisa de ajuda rápida?</h2>
+        <p>Informações educativas para situações de emergência.</p>
+    </div>
+
+    <div class="feature-grid">
+        <article>
+            <span>🩹</span>
+            <h3>Primeiros socorros</h3>
+            <p>Orientações simples e educativas para situações comuns.</p>
+            <button type="button" id="openFirstAidBtn">Ver orientações</button>
+        </article>
+
+        <article>
+            <span>🎥</span>
+            <h3>Vídeos educativos</h3>
+            <p>Conteúdos sobre primeiros socorros e cuidados.</p>
+            <button type="button" id="openVideosBtn">Assistir aos vídeos</button>
+        </article>
+
+        <article>
+            <span>☎️</span>
+            <h3>Telefones importantes</h3>
+            <p>Contatos de emergência e atendimento.</p>
+            <button type="button" id="openPhonesBtn">Ver contatos</button>
+        </article>
+    </div>
+</section>
+
+<section id="atendimento" class="section light">
+    <div class="section-head center">
+        <span class="tag">ATENDIMENTO</span>
+        <h2>Encontre o melhor atendimento</h2>
+        <p>Consulte unidades, lotação e profissionais disponíveis.</p>
+    </div>
+
+    <div class="filters">
+        <input id="unitSearch" placeholder="🔎 Procurar unidade...">
+
+        <select id="lotFilter">
+            <option value="todos">Todas as lotações</option>
+            <option value="baixa">🟢 Baixa</option>
+            <option value="media">🟡 Média</option>
+            <option value="alta">🔴 Alta</option>
+        </select>
+    </div>
+
+    <div id="units" class="units"></div>
+
+    <div class="sub-title">
+        <span class="tag">PROFISSIONAIS</span>
+        <h2>Profissionais disponíveis</h2>
+    </div>
+
+    <div id="professionals" class="professional-grid"></div>
+
+    <!-- ATENDIMENTO DOMICILIAR -->
+    <div class="home-care" id="atendimentoDomiciliar">
+        <div>
+            <span class="tag">EM CASA</span>
+            <h2>Atendimento domiciliar</h2>
+            <p>Solicite uma avaliação para atendimento em sua residência e acompanhe o andamento pelo protocolo.</p>
         </div>
 
-    </header>
+        <form id="homeCareForm" class="home-care-form">
+            <label for="homeCareName">Nome do paciente</label>
+            <input id="homeCareName" type="text" maxlength="100" required placeholder="Nome completo">
 
+            <label for="homeCareAddress">Endereço da visita</label>
+            <input id="homeCareAddress" type="text" maxlength="200" required placeholder="Rua, número, bairro e cidade">
 
-    <main>
+            <label for="homeCarePhone">Telefone para contato</label>
+            <input id="homeCarePhone" type="tel" maxlength="20" required placeholder="(00) 00000-0000">
 
-        <!-- INÍCIO -->
-        <section id="inicio" class="hero">
+            <label for="homeCareReason">Motivo da solicitação</label>
+            <textarea id="homeCareReason" rows="4" maxlength="500" required placeholder="Descreva brevemente o motivo do pedido"></textarea>
 
-            <div class="hero-bg"></div>
+            <button class="btn" type="submit">Solicitar avaliação domiciliar</button>
+            <p id="homeCareMessage" class="form-message" aria-live="polite"></p>
+        </form>
 
-            <div class="hero-content">
+        <div class="tracking-box">
+            <h3>📋 Acompanhar solicitação</h3>
+            <p>Digite o protocolo recebido após realizar a solicitação.</p>
 
-                <span class="tag">
-                    PLATAFORMA DIGITAL DE SAÚDE
-                </span>
-
-                <h1>
-                    Como podemos
-                    <br>
-                    <strong>ajudar você?</strong>
-                </h1>
-
-                <p>
-                    Encontre atendimento, consulte medicamentos,
-                    acompanhe informações de saúde e acesse seus
-                    documentos em um só lugar.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <a href="#atendimento" class="btn">
-                        Encontrar atendimento
-                    </a>
-
-                    <a href="#saude" class="btn outline">
-                        Consultar medicamentos
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="hero-photo-tip">
-                📷 Coloque sua imagem como
-                <b>hospital-bg.jpg</b>
-            </div>
-
-        </section>
-
-
-        <!-- ACESSO RÁPIDO -->
-        <section class="quick">
-
-            <div class="section-head">
-
-                <span class="tag">
-                    ACESSO RÁPIDO
-                </span>
-
-                <h2>
-                    Como podemos ajudar?
-                </h2>
-
-            </div>
-
-
-            <div class="quick-grid">
-
-                <a href="#emergencia" class="quick-card danger">
-
-                    <span>🔴</span>
-
-                    <div>
-                        <b>Emergência</b>
-                        <small>
-                            Orientações rápidas e primeiros socorros
-                        </small>
-                    </div>
-
-                </a>
-
-
-                <a href="#atendimento" class="quick-card">
-
-                    <span>🏥</span>
-
-                    <div>
-                        <b>Encontrar atendimento</b>
-                        <small>
-                            Unidades, lotação e profissionais
-                        </small>
-                    </div>
-
-                </a>
-
-
-                <a href="#saude" class="quick-card">
-
-                    <span>💊</span>
-
-                    <div>
-                        <b>Medicamentos</b>
-                        <small>
-                            Consulte a disponibilidade
-                        </small>
-                    </div>
-
-                </a>
-
-
-                <a href="#meusus" class="quick-card">
-
-                    <span>📄</span>
-
-                    <div>
-                        <b>Meus documentos</b>
-                        <small>
-                            Exames, receitas e laudos
-                        </small>
-                    </div>
-
-                </a>
-
-
-                <a href="#saude" class="quick-card">
-
-                    <span>💉</span>
-
-                    <div>
-                        <b>Vacinação</b>
-                        <small>
-                            Informações sobre vacinas
-                        </small>
-                    </div>
-
-                </a>
-
-
-                <a href="#atendimento" class="quick-card">
-
-                    <span>🏠</span>
-
-                    <div>
-                        <b>Atendimento domiciliar</b>
-                        <small>
-                            Veja as opções disponíveis
-                        </small>
-                    </div>
-
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- EMERGÊNCIA -->
-        <section id="emergencia" class="section">
-
-            <div class="section-head">
-
-                <span class="tag red">
-                    EMERGÊNCIA
-                </span>
-
-                <h2>
-                    Precisa de ajuda rápida?
-                </h2>
-
-                <p>
-                    Informações educativas para situações
-                    de emergência.
-                </p>
-
-            </div>
-
-
-            <div class="feature-grid">
-
-                <article>
-
-                    <span>🩹</span>
-
-                    <h3>
-                        Primeiros socorros
-                    </h3>
-
-                    <p>
-                        Orientações simples e educativas
-                        para situações comuns.
-                    </p>
-
-                    <button onclick="info(
-                        'Primeiros socorros',
-                        'Conteúdo educativo de primeiros socorros. Em situações graves, procure atendimento de emergência.'
-                    )">
-                        Ver orientações
-                    </button>
-
-                </article>
-
-
-                <article>
-
-                    <span>🎥</span>
-
-                    <h3>
-                        Vídeos educativos
-                    </h3>
-
-                    <div class="videos-grid">
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/fYZpdFpF_bQ"
-                            title="Vídeo educativo 1" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/PDemedkFSPo"
-                            title="Vídeo educativo 2" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/A6z-jNcw0fo"
-                            title="Vídeo educativo 3" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/uImVd4rBlPA"
-                            title="Vídeo educativo 4" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/pn_oKccTlvc"
-                            title="Vídeo educativo 5" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/gqgguKRpbQQ"
-                            title="Vídeo educativo 6" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/4uxn36IGCBQ"
-                            title="Vídeo educativo 7" allowfullscreen></iframe>
-                        </div>
-                      
-                        <div class="video-player">
-                          <iframe src="https://www.youtube.com/embed/T1admQD8ZII"
-                            title="Vídeo educativo 8" allowfullscreen></iframe>
-                        </div>
-                      </div>              
-
-                </article>
-
-
-                <article>
-
-                    <span>☎️</span>
-
-                    <h3>
-                        Telefones importantes
-                    </h3>
-
-                    <p>
-                        Tenha contatos de emergência
-                        facilmente acessíveis.
-                    </p>
-
-                    <button onclick="info(
-                        'Telefones importantes',
-                        'Adicione aqui os contatos oficiais de emergência da cidade escolhida para o projeto.'
-                    )">
-                        Ver contatos
-                    </button>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- ATENDIMENTO -->
-        <section id="atendimento" class="section light">
-
-            <div class="section-head center">
-
-                <span class="tag">
-                    ATENDIMENTO
-                </span>
-
-                <h2>
-                    Encontre o melhor atendimento
-                </h2>
-
-                <p>
-                    Consulte unidades, lotação e profissionais
-                    disponíveis.
-                </p>
-
-            </div>
-
-
-            <!-- FILTROS -->
-
-            <div class="filters">
-
-                <input
-                    id="unitSearch"
-                    placeholder="🔎 Procurar unidade..."
-                >
-
-                <select id="lotFilter">
-
-                    <option value="todos">
-                        Todas as lotações
-                    </option>
-
-                    <option value="baixa">
-                        🟢 Baixa
-                    </option>
-
-                    <option value="media">
-                        🟡 Média
-                    </option>
-
-                    <option value="alta">
-                        🔴 Alta
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <!-- UNIDADES -->
-
-            <div id="units" class="units"></div>
-
-
-            <!-- PROFISSIONAIS -->
-
-            <div class="sub-title">
-
-                <span class="tag">
-                    PROFISSIONAIS
-                </span>
-
-                <h2>
-                    Profissionais disponíveis
-                </h2>
-
-            </div>
-
-
-            <div
-                id="professionals"
-                class="professional-grid">
-            </div>
-
-
-            <!-- ATENDIMENTO DOMICILIAR -->
-
-            <div class="home-care">
-
-                <div>
-
-                    <span class="tag">
-                        EM CASA
-                    </span>
-
-                    <h2>
-                        Atendimento domiciliar
-                    </h2>
-
-                    <p>
-                        Consulte a disponibilidade de
-                        atendimento em casa.
-                    </p>
-
-                </div>
-
-                <button
-                    class="btn"
-                    onclick="info(
-                        'Atendimento domiciliar',
-                        'No sistema real, o paciente poderia solicitar uma visita e acompanhar a disponibilidade da equipe.'
-                    )">
-
-                    Solicitar atendimento
-
-                </button>
-
-            </div>
-
-
-            <!-- AGENDAMENTO -->
-
-            <div class="sub-title">
-
-                <span class="tag">
-                    AGENDAMENTO
-                </span>
-
-                <h2>
-                    Marque sua consulta
-                </h2>
-
-            </div>
-
-
-            <form
-                id="appointmentForm"
-                class="appointment">
-
-                <input
-                    id="patient"
-                    required
-                    placeholder="Nome do paciente"
-                >
-
-
-                <select id="specialty">
-
-                    <option>
-                        Clínica Geral
-                    </option>
-
-                    <option>
-                        Cardiologia
-                    </option>
-
-                    <option>
-                        Pediatria
-                    </option>
-
-                    <option>
-                        Dermatologia
-                    </option>
-
-                    <option>
-                        Ortopedia
-                    </option>
-
-                </select>
-
-
-                <select
-                    id="professionalSelect">
-                </select>
-
-
-                <input
-                    id="appointmentDate"
-                    required
-                    type="date"
-                >
-
-
-                <select id="appointmentTime">
-
-                    <option>
-                        08:00
-                    </option>
-
-                    <option>
-                        09:30
-                    </option>
-
-                    <option>
-                        11:00
-                    </option>
-
-                    <option>
-                        14:00
-                    </option>
-
-                    <option>
-                        15:30
-                    </option>
-
-                    <option>
-                        17:00
-                    </option>
-
-                </select>
-
-
-                <button
-                    class="btn"
-                    type="submit">
-
-                    Confirmar agendamento
-
-                </button>
-
-
-                <p id="appointmentMsg"></p>
-
+            <form id="trackHomeCareForm">
+                <input id="trackingProtocol" type="text" required placeholder="Ex.: VS-123456">
+                <button class="btn" type="submit">Consultar protocolo</button>
             </form>
 
-        </section>
-
-
-        <!-- SAÚDE -->
-        <section id="saude" class="section">
-
-            <div class="section-head center">
-
-                <span class="tag">
-                    SAÚDE
-                </span>
-
-                <h2>
-                    Informação para cuidar de você
-                </h2>
-
-            </div>
-
-
-            <div class="health-grid">
-
-                <article>
-
-                    <span>💊</span>
-
-                    <h3>
-                        Medicamentos
-                    </h3>
-
-                    <p>
-                        Veja onde determinados medicamentos
-                        estão disponíveis.
-                    </p>
-
-                    <button onclick="showMedicines()">
-                        Consultar estoque
-                    </button>
-
-                </article>
-
-
-                <article>
-
-                    <span>💉</span>
-
-                    <h3>
-                        Vacinação
-                    </h3>
-
-                    <p>
-                        Consulte informações sobre vacinação.
-                    </p>
-
-                    <button onclick="info(
-                        'Vacinação',
-                        'Consulte a unidade de saúde para confirmar vacinas, horários e disponibilidade.'
-                    )">
-
-                        Consultar
-
-                    </button>
-
-                </article>
-
-
-                <article>
-
-                    <span>🛡️</span>
-
-                    <h3>
-                        Prevenção de doenças
-                    </h3>
-
-                    <p>
-                        Informações educativas sobre prevenção.
-                    </p>
-
-                    <button onclick="info(
-                        'Prevenção',
-                        'O site pode reunir conteúdos sobre diabetes, gripe, hipertensão, saúde do coração e outros temas.'
-                    )">
-
-                        Acessar
-
-                    </button>
-
-                </article>
-
-
-                <article>
-
-                    <span>🥗</span>
-
-                    <h3>
-                        Hábitos saudáveis
-                    </h3>
-
-                    <p>
-                        Conteúdos para incentivar uma rotina
-                        de cuidado e bem-estar.
-                    </p>
-
-                    <button onclick="info(
-                        'Hábitos saudáveis',
-                        'Alimentação variada, movimento adequado, sono e acompanhamento de saúde podem contribuir para o bem-estar.'
-                    )">
-
-                        Saiba mais
-
-                    </button>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- MEU SUS -->
-        <section id="meusus" class="section light">
-
-            <div class="section-head">
-
-                <span class="tag">
-                    ÁREA DO PACIENTE
-                </span>
-
-                <h2>
-                    Meu SUS
-                </h2>
-
-                <p>
-                    Centralize informações pessoais e
-                    documentos do paciente.
-                </p>
-
-            </div>
-
-
-            <div class="patient-layout">
-
-                <aside class="profile">
-
-                    <div class="avatar">
-                        JS
-                    </div>
-
-                    <h3>
-                        João da Silva
-                    </h3>
-
-                    <p>
-                        Paciente demonstrativo
-                    </p>
-
-                    <div class="card-number">
-
-                        Cartão SUS
-
-                        <br>
-
-                        <b>
-                            •••• •••• 4821
-                        </b>
-
-                    </div>
-
-                </aside>
-
-
-                <div class="documents">
-
-                    <button onclick="info(
-                        'Dados do paciente',
-                        'Nome, data de nascimento e outros dados seriam carregados após o login.'
-                    )">
-                        👤 Dados do paciente
-                    </button>
-
-
-                    <button onclick="info(
-                        'Carteirinha',
-                        'Carteirinha digital demonstrativa do projeto.'
-                    )">
-                        💳 Carteirinha
-                    </button>
-
-
-                    <button onclick="info(
-                        'Exames',
-                        'Lista de exames realizados e resultados disponíveis.'
-                    )">
-                        🧪 Exames
-                    </button>
-
-
-                    <button onclick="info(
-                        'Receitas',
-                        'Receitas digitais disponíveis para o paciente.'
-                    )">
-                        💊 Receitas
-                    </button>
-
-
-                    <button onclick="info(
-                        'Laudos',
-                        'Laudos e resultados de exames disponibilizados de forma segura.'
-                    )">
-                        📄 Laudos
-                    </button>
-
-
-                    <button onclick="info(
-                        'Histórico',
-                        'Histórico de atendimentos e consultas do paciente.'
-                    )">
-                        📋 Histórico
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="security">
-
-                🔒 <b>Protótipo acadêmico:</b>
-                os documentos são demonstrativos.
-
-            </div>
-
-        </section>
-
-
-        <!-- CUIDADORES -->
-        <section id="cuidadores" class="section">
-
-            <div class="section-head center">
-
-                <span class="tag">
-                    CUIDADORES
-                </span>
-
-                <h2>
-                    Encontre apoio
-                </h2>
-
-                <p>
-                    Facilite a busca por cuidadores.
-                </p>
-
-            </div>
-
-
-            <div
-                class="care-grid"
-                id="caregivers">
-            </div>
-
-        </section>
-
-
-        <!-- ADMINISTRADOR -->
-        <section class="admin-section">
-
-            <div>
-
-                <span class="tag">
-                    ÁREA ADMINISTRATIVA
-                </span>
-
-                <h2>
-                    Administrador
-                </h2>
-
-                <p>
-                    Atualize informações que aparecem
-                    para os pacientes.
-                </p>
-
-            </div>
-
-
-            <button
-                class="btn"
-                id="adminBtn">
-
-                Abrir painel
-
-            </button>
-
-        </section>
-
-
-        <!-- FEEDBACK -->
-        <section class="feedback section">
-
-            <div class="section-head center">
-
-                <span class="tag">
-                    FEEDBACK
-                </span>
-
-                <h2>
-                    O que você achou?
-                </h2>
-
-                <p>
-                    Avalie sua experiência.
-                </p>
-
-            </div>
-
-
-            <div class="feedback-box">
-
-                <div id="stars">
-
-                    <button>★</button>
-                    <button>★</button>
-                    <button>★</button>
-                    <button>★</button>
-                    <button>★</button>
-
-                </div>
-
-
-                <textarea
-                    id="feedbackText"
-                    placeholder="Escreva seu comentário...">
-                </textarea>
-
-
-                <button
-                    id="feedbackBtn"
-                    class="btn">
-
-                    Enviar feedback
-
-                </button>
-
-
-                <p id="feedbackMsg"></p>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- RODAPÉ -->
-
-    <footer>
-
-        <div class="logo">
-            <span>✚</span>
-            VivaSUS
+            <div id="trackingResult" aria-live="polite"></div>
         </div>
-
-        <p>
-            Projeto acadêmico de TCC • Plataforma de acesso aos serviços de saúde
-        </p>
-
-    </footer>
-
-
-    <!-- MODAL -->
-
-    <div id="modal" class="modal">
-
-        <div class="modal-box">
-
-            <button
-                class="close"
-                onclick="closeModal()">
-                ×
-            </button>
-
-            <span class="tag">
-                VIVASUS
-            </span>
-
-            <h2 id="modalTitle"></h2>
-
-            <p id="modalBody"></p>
-
-            <button
-                class="btn"
-                onclick="closeModal()">
-
-                Fechar
-
-            </button>
-
-        </div>
-
     </div>
 
-
-    <!-- PAINEL ADMINISTRADOR -->
-
-    <div id="adminModal" class="modal">
-
-        <div class="modal-box admin">
-
-            <button
-                class="close"
-                onclick="closeAdmin()">
-                ×
-            </button>
-
-            <span class="tag">
-                ADMINISTRADOR
-            </span>
-
-            <h2>
-                Painel de controle
-            </h2>
-
-
-            <label>
-
-                Unidade
-
-                <select id="adminUnit"></select>
-
-            </label>
-
-
-            <label>
-
-                Nova lotação
-
-                <select id="adminLot">
-
-                    <option value="baixa">
-                        🟢 Baixa
-                    </option>
-
-                    <option value="media">
-                        🟡 Média
-                    </option>
-
-                    <option value="alta">
-                        🔴 Alta
-                    </option>
-
-                </select>
-
-            </label>
-
-
-            <label>
-
-                Estoque de medicamentos
-
-                <input
-                    id="adminStock"
-                    type="number"
-                    min="0"
-                    placeholder="Quantidade"
-                >
-
-            </label>
-
-
-            <button
-                id="saveAdmin"
-                class="btn">
-
-                Salvar alterações
-
-            </button>
-
-
-            <p id="adminMsg"></p>
-
-        </div>cle
-
+    <div class="sub-title">
+        <span class="tag">AGENDAMENTO</span>
+        <h2>Marque sua consulta</h2>
     </div>
 
+    <form id="appointmentForm" class="appointment">
+        <input id="patient" required placeholder="Nome do paciente">
 
-    <script src="script.js"></script>
+        <select id="specialty">
+            <option>Clínica Geral</option>
+            <option>Cardiologia</option>
+            <option>Pediatria</option>
+            <option>Dermatologia</option>
+            <option>Ortopedia</option>
+        </select>
 
+        <select id="professionalSelect"></select>
+
+        <input id="appointmentDate" required type="date">
+
+        <select id="appointmentTime">
+            <option>08:00</option>
+            <option>09:30</option>
+            <option>11:00</option>
+            <option>14:00</option>
+            <option>15:30</option>
+            <option>17:00</option>
+        </select>
+
+        <button class="btn" type="submit">Confirmar agendamento</button>
+        <p id="appointmentMsg" aria-live="polite"></p>
+    </form>
+</section>
+
+<section id="saude" class="section">
+    <div class="section-head center">
+        <span class="tag">SAÚDE</span>
+        <h2>Informação para cuidar de você</h2>
+    </div>
+
+    <div class="health-grid">
+        <article>
+            <span>💊</span>
+            <h3>Medicamentos</h3>
+            <p>Veja onde determinados medicamentos estão disponíveis.</p>
+            <button type="button" onclick="showMedicines()">Consultar estoque</button>
+        </article>
+
+        <article>
+            <span>💉</span>
+            <h3>Vacinação</h3>
+            <p>Consulte informações sobre vacinação.</p>
+            <button type="button" onclick="info('Vacinação','Consulte a unidade de saúde para confirmar vacinas, horários e disponibilidade.')">Consultar</button>
+        </article>
+
+        <article>
+            <span>🛡️</span>
+            <h3>Prevenção de doenças</h3>
+            <p>Informações educativas sobre prevenção.</p>
+            <button type="button" onclick="info('Prevenção','Conteúdos educativos sobre prevenção de doenças.')">Acessar</button>
+        </article>
+
+        <article>
+            <span>🥗</span>
+            <h3>Hábitos saudáveis</h3>
+            <p>Conteúdos para incentivar uma rotina de cuidado e bem-estar.</p>
+            <button type="button" onclick="info('Hábitos saudáveis','Alimentação variada, movimento adequado, sono e acompanhamento de saúde contribuem para o bem-estar.')">Saiba mais</button>
+        </article>
+    </div>
+</section>
+
+<!-- MEU SUS -->
+<section id="meusus" class="section light">
+    <div class="section-head">
+        <span class="tag">ÁREA DO PACIENTE</span>
+        <h2>Meu SUS</h2>
+        <p>Cadastre seus dados e consulte suas informações de saúde.</p>
+    </div>
+
+    <div class="patient-layout">
+        <aside class="profile">
+            <div class="avatar" id="patientInitials">?</div>
+            <h3 id="patientDisplayName">Nome do paciente</h3>
+            <p>Paciente cadastrado</p>
+
+            <div class="card-number">
+                Carteirinha SUS demonstrativa<br>
+                <b id="patientCardNumber">Não informado</b>
+            </div>
+        </aside>
+
+        <div class="documents">
+            <button type="button" onclick="showPatientData()">👤 Dados do paciente</button>
+            <button type="button" onclick="showPatientCard()">💳 Carteirinha</button>
+            <button type="button" onclick="showPatientRecords('Exames')">🧪 Exames</button>
+            <button type="button" onclick="showPatientRecords('Receitas')">💊 Receitas</button>
+            <button type="button" onclick="showPatientRecords('Laudos')">📄 Laudos</button>
+            <button type="button" onclick="showPatientRecords('Histórico')">📋 Histórico</button>
+        </div>
+    </div>
+
+    <div class="patient-registration">
+        <h3>📝 Meus dados</h3>
+        <p>Preencha seus dados para personalizar sua área do paciente.</p>
+
+        <form id="patientDataForm">
+            <label for="patientFullName">Nome completo</label>
+            <input id="patientFullName" type="text" maxlength="100" required placeholder="Digite seu nome">
+
+            <label for="patientBirth">Data de nascimento</label>
+            <input id="patientBirth" type="date">
+
+            <label for="patientPhone">Telefone</label>
+            <input id="patientPhone" type="tel" maxlength="20" placeholder="(00) 00000-0000">
+
+            <label for="patientCard">Número da carteirinha (demonstrativo)</label>
+            <input id="patientCard" type="text" maxlength="30" placeholder="Digite um número fictício">
+
+            <button type="submit" class="btn">Salvar meus dados</button>
+            <p id="patientDataMessage" aria-live="polite"></p>
+        </form>
+    </div>
+
+    <div class="patient-records">
+        <h3>📁 Meus documentos e informações</h3>
+        <p>Adicione informações demonstrativas para consultar depois.</p>
+        <div id="patientRecordsList"></div>
+    </div>
+
+    <div class="security">
+        🔒 <b>Protótipo acadêmico:</b> informações demonstrativas salvas somente neste navegador.
+    </div>
+</section>
+
+<section id="cuidadores" class="section">
+    <div class="section-head center">
+        <span class="tag">CUIDADORES</span>
+        <h2>Encontre apoio</h2>
+        <p>Facilite a busca por cuidadores.</p>
+    </div>
+
+    <div class="care-grid" id="caregivers"></div>
+</section>
+
+<section class="admin-section">
+    <div>
+        <span class="tag">ÁREA ADMINISTRATIVA</span>
+        <h2>Administrador</h2>
+        <p>Atualize informações e acompanhe solicitações demonstrativas.</p>
+    </div>
+
+    <button class="btn" id="adminBtn" type="button">Abrir painel</button>
+</section>
+
+<section class="feedback section">
+    <div class="section-head center">
+        <span class="tag">FEEDBACK</span>
+        <h2>O que você achou?</h2>
+        <p>Avalie sua experiência.</p>
+    </div>
+
+    <div class="feedback-box">
+        <div id="stars">
+            <button type="button">★</button>
+            <button type="button">★</button>
+            <button type="button">★</button>
+            <button type="button">★</button>
+            <button type="button">★</button>
+        </div>
+
+        <textarea id="feedbackText" placeholder="Escreva seu comentário..."></textarea>
+        <button id="feedbackBtn" class="btn" type="button">Enviar feedback</button>
+        <p id="feedbackMsg"></p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="logo"><span>✚</span> VivaSUS</div>
+    <p>Projeto acadêmico de TCC • Plataforma de acesso aos serviços de saúde</p>
+    <small>Protótipo demonstrativo. Não substitui os canais oficiais de atendimento.</small>
+</footer>
+
+<!-- MODAL DE INFORMAÇÕES -->
+<div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+        <button class="close" type="button" onclick="closeModal()" aria-label="Fechar">×</button>
+        <span class="tag">VIVASUS</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalBody"></p>
+        <button class="btn" type="button" onclick="closeModal()">Fechar</button>
+    </div>
+</div>
+
+<!-- MODAL PRIMEIROS SOCORROS -->
+<div id="firstAidModal" class="modal" aria-hidden="true">
+    <div class="modal-box first-aid-modal-box" role="dialog" aria-modal="true" aria-labelledby="firstAidTitle">
+        <button class="close" type="button" id="closeFirstAidBtn" aria-label="Fechar">×</button>
+        <span class="tag">VIVASUS • EDUCAÇÃO EM SAÚDE</span>
+        <h2 id="firstAidTitle">Primeiros socorros</h2>
+        <p>Selecione um assunto para consultar orientações educativas.</p>
+        <div id="firstAidGrid" class="first-aid-grid"></div>
+
+        <div id="firstAidContent" class="first-aid-content" hidden>
+            <h3 id="firstAidContentTitle"></h3>
+            <p id="firstAidContentText"></p>
+            <button type="button" class="btn" id="backFirstAidBtn">Voltar aos assuntos</button>
+        </div>
+
+        <div class="first-aid-warning">
+            <strong>⚠️ Atenção:</strong> estas informações são educativas e não substituem atendimento profissional. Em emergências médicas, ligue 192 (SAMU).
+        </div>
+
+        <button class="btn" type="button" id="closeFirstAidFooter">Fechar</button>
+    </div>
+</div>
+
+<!-- MODAL DOS VÍDEOS -->
+<div id="videosModal" class="modal" aria-hidden="true">
+    <div class="modal-box videos-modal-box" role="dialog" aria-modal="true">
+        <button class="close" type="button" id="closeVideosBtn" aria-label="Fechar">×</button>
+        <span class="tag">VIVASUS</span>
+        <h2>Vídeos educativos</h2>
+        <div id="videosGrid" class="videos-grid"></div>
+    </div>
+</div>
+
+<!-- MODAL DOS TELEFONES -->
+<div id="phonesModal" class="modal" aria-hidden="true">
+    <div class="modal-box phones-modal-box" role="dialog" aria-modal="true">
+        <button class="close" type="button" id="closePhonesBtn" aria-label="Fechar">×</button>
+        <span class="tag">VIVASUS</span>
+        <h2>Telefones importantes</h2>
+        <p>Toque no número para abrir a opção de ligação no celular.</p>
+        <div id="phonesList"></div>
+        <button class="btn" type="button" id="closePhonesFooter">Fechar</button>
+    </div>
+</div>
+
+<!-- MODAL ADMINISTRADOR -->
+<div id="adminModal" class="modal" aria-hidden="true">
+    <div class="modal-box admin" role="dialog" aria-modal="true">
+        <button class="close" type="button" onclick="closeAdmin()" aria-label="Fechar">×</button>
+        <span class="tag">ADMINISTRADOR</span>
+        <h2>Painel de controle</h2>
+
+        <label for="adminUnit">Unidade</label>
+        <select id="adminUnit"></select>
+
+        <label for="adminLot">Nova lotação</label>
+        <select id="adminLot">
+            <option value="baixa">🟢 Baixa</option>
+            <option value="media">🟡 Média</option>
+            <option value="alta">🔴 Alta</option>
+        </select>
+
+        <label for="adminStock">Estoque de medicamentos</label>
+        <input id="adminStock" type="number" min="0" placeholder="Quantidade">
+
+        <button id="saveAdmin" class="btn" type="button">Salvar alterações</button>
+        <p id="adminMsg"></p>
+
+        <hr>
+        <h3>Solicitações de atendimento domiciliar</h3>
+        <p>Atualize o andamento das solicitações demonstrativas.</p>
+        <div id="adminHomeCareList"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>
