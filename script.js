@@ -122,8 +122,7 @@ function renderUnits() {
                 <p>👥 ${unit.patients} pacientes</p>
                 <p>👩‍⚕️ ${unit.professionals} profissionais</p>
                 <p>Lotação: <strong class="${statusClass}">${status}</strong></p>
-                <button type="button"
-                    onclick="showUnitDetails(${unit.id})">
+                <button type="button" onclick="showUnitDetails(${unit.id})">
                     Ver detalhes
                 </button>
             </article>
@@ -165,35 +164,45 @@ const professionals = [
         name: "Dra. Ana Souza",
         specialty: "Clínica Geral",
         unit: "UBS Central",
-        schedule: "08:00 às 14:00"
+        schedule: "08:00 às 14:00",
+        days: [1, 2, 4],
+        times: ["08:00", "09:00", "10:30", "13:00"]
     },
     {
         id: 2,
         name: "Dr. Carlos Oliveira",
         specialty: "Cardiologia",
         unit: "Hospital Municipal",
-        schedule: "09:00 às 16:00"
+        schedule: "09:00 às 16:00",
+        days: [2, 3, 5],
+        times: ["09:00", "10:00", "13:00", "15:00"]
     },
     {
         id: 3,
         name: "Dra. Mariana Lima",
         specialty: "Pediatria",
         unit: "UBS Vila Rami",
-        schedule: "08:00 às 15:00"
+        schedule: "08:00 às 15:00",
+        days: [1, 3, 5],
+        times: ["08:00", "09:30", "13:00", "14:00"]
     },
     {
         id: 4,
         name: "Dr. Pedro Santos",
         specialty: "Ortopedia",
         unit: "Hospital Municipal",
-        schedule: "10:00 às 17:00"
+        schedule: "10:00 às 17:00",
+        days: [2, 4],
+        times: ["10:00", "11:00", "14:00", "16:00"]
     },
     {
         id: 5,
         name: "Dra. Julia Martins",
         specialty: "Dermatologia",
         unit: "UBS Jardim do Lago",
-        schedule: "08:00 às 13:00"
+        schedule: "08:00 às 13:00",
+        days: [1, 4, 5],
+        times: ["08:00", "09:00", "10:00", "11:00", "12:00"]
     }
 ];
 
@@ -209,86 +218,533 @@ function renderProfessionals() {
     `).join("");
 }
 
-function fillProfessionalSelect() {
-    const select = $("professionalSelect");
+/* =========================
+   AGENDA DE CONSULTAS
+========================= */
 
-    select.innerHTML = '<option value="">Selecione um profissional</option>';
+const APPOINTMENT_STORAGE_KEY = "vivasus_appointments";
 
-    professionals.forEach(person => {
-        const option = document.createElement("option");
-        option.value = person.name;
-        option.textContent = `${person.name} - ${person.specialty}`;
-        select.appendChild(option);
+function getAppointments() {
+    try {
+        return JSON.parse(
+            localStorage.getItem(APPOINTMENT_STORAGE_KEY)
+        ) || [];
+    } catch (error) {
+        console.error("Erro ao carregar agendamentos:", error);
+        return [];
+    }
+}
+
+function saveAppointments(appointments) {
+    try {
+        localStorage.setItem(
+            APPOINTMENT_STORAGE_KEY,
+            JSON.stringify(appointments)
+        );
+
+        return true;
+    } catch (error) {
+        console.error("Erro ao salvar agendamento:", error);
+        return false;
+    }
+}
+
+function getLocalDateString(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+function formatAppointmentDate(dateString) {
+    const [year, month, day] = dateString.split("-").map(Number);
+
+    return new Date(year, month - 1, day).toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
     });
 }
 
-/* =========================
-   AGENDAMENTO DE CONSULTAS
-========================= */
+function isAppointmentTimePast(dateString, time) {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const [hour, minute] = time.split(":").map(Number);
+
+    const appointmentDate = new Date(
+        year,
+        month - 1,
+        day,
+        hour,
+        minute
+    );
+
+    return appointmentDate <= new Date();
+}
+
+function getSelectedProfessional() {
+    const id = Number($("professionalSelect").value);
+
+    return professionals.find(person => person.id === id);
+}
+
+function fillProfessionalSelect() {
+    const select = $("professionalSelect");
+    const specialty = $("specialty").value;
+
+    select.innerHTML = `
+        <option value="">Selecione um profissional</option>
+    `;
+
+    const filteredProfessionals = professionals.filter(person =>
+        person.specialty === specialty
+    );
+
+    filteredProfessionals.forEach(person => {
+        const option = document.createElement("option");
+
+        option.value = person.id;
+        option.textContent = person.name;
+
+        select.appendChild(option);
+    });
+
+    $("appointmentDate").innerHTML = `
+        <option value="">Selecione primeiro um profissional</option>
+    `;
+
+    $("appointmentDate").disabled = true;
+
+    $("appointmentTime").innerHTML = `
+        <option value="">Selecione primeiro uma data</option>
+    `;
+
+    $("appointmentTime").disabled = true;
+}
+
+function updateAvailableDates() {
+    const professional = getSelectedProfessional();
+    const dateSelect = $("appointmentDate");
+    const timeSelect = $("appointmentTime");
+
+    dateSelect.innerHTML = "";
+    timeSelect.innerHTML = "";
+
+    timeSelect.disabled = true;
+
+    if (!professional) {
+        dateSelect.innerHTML = `
+            <option value="">Selecione primeiro um profissional</option>
+        `;
+
+        dateSelect.disabled = true;
+
+        timeSelect.innerHTML = `
+            <option value="">Selecione primeiro uma data</option>
+        `;
+
+        return;
+    }
+
+    dateSelect.innerHTML = `
+        <option value="">Escolha uma data disponível</option>
+    `;
+
+    dateSelect.disabled = false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const appointments = getAppointments();
+
+    let availableCount = 0;
+
+    for (let i = 0; i < 30; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+
+        const weekday = date.getDay();
+        const dateString = getLocalDateString(date);
+
+        if (!professional.days.includes(weekday)) {
+            continue;
+        }
+
+        const hasFreeTime = professional.times.some(time => {
+            const alreadyBooked = appointments.some(appointment =>
+                appointment.professionalId === professional.id &&
+                appointment.date === dateString &&
+                appointment.time === time
+            );
+
+            const timeHasPassed = isAppointmentTimePast(dateString, time);
+
+            return !alreadyBooked && !timeHasPassed;
+        });
+
+        if (!hasFreeTime) {
+            continue;
+        }
+
+        const option = document.createElement("option");
+
+        option.value = dateString;
+        option.textContent = formatAppointmentDate(dateString);
+
+        dateSelect.appendChild(option);
+
+        availableCount++;
+    }
+
+    if (availableCount === 0) {
+        dateSelect.innerHTML = `
+            <option value="">Nenhuma data disponível nos próximos 30 dias</option>
+        `;
+
+        dateSelect.disabled = true;
+    }
+}
+
+function updateAvailableTimes() {
+    const professional = getSelectedProfessional();
+    const selectedDate = $("appointmentDate").value;
+    const timeSelect = $("appointmentTime");
+
+    timeSelect.innerHTML = "";
+
+    if (!professional || !selectedDate) {
+        timeSelect.innerHTML = `
+            <option value="">Selecione primeiro uma data</option>
+        `;
+
+        timeSelect.disabled = true;
+        return;
+    }
+
+    const appointments = getAppointments();
+
+    const availableTimes = professional.times.filter(time => {
+        const alreadyBooked = appointments.some(appointment =>
+            appointment.professionalId === professional.id &&
+            appointment.date === selectedDate &&
+            appointment.time === time
+        );
+
+        const timeHasPassed = isAppointmentTimePast(selectedDate, time);
+
+        return !alreadyBooked && !timeHasPassed;
+    });
+
+    if (availableTimes.length === 0) {
+        timeSelect.innerHTML = `
+            <option value="">Não há horários livres nesta data</option>
+        `;
+
+        timeSelect.disabled = true;
+        return;
+    }
+
+    timeSelect.innerHTML = `
+        <option value="">Escolha um horário</option>
+    `;
+
+    availableTimes.forEach(time => {
+        const option = document.createElement("option");
+
+        option.value = time;
+        option.textContent = time;
+
+        timeSelect.appendChild(option);
+    });
+
+    timeSelect.disabled = false;
+}
+
+$("specialty").addEventListener("change", function() {
+    fillProfessionalSelect();
+});
+
+$("professionalSelect").addEventListener("change", function() {
+    updateAvailableDates();
+});
+
+$("appointmentDate").addEventListener("change", function() {
+    updateAvailableTimes();
+});
 
 $("appointmentForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
     const patient = $("patient").value.trim();
     const specialty = $("specialty").value;
-    const professional = $("professionalSelect").value;
+    const professional = getSelectedProfessional();
     const date = $("appointmentDate").value;
     const time = $("appointmentTime").value;
 
-    if (!patient || !professional || !date) {
-        $("appointmentMsg").textContent = "Preencha todos os campos.";
+    const message = $("appointmentMsg");
+
+    if (!patient || !professional || !date || !time) {
+        message.textContent =
+            "Preencha todos os campos e escolha um horário disponível.";
+
         return;
     }
 
-    const selectedDate = new Date(date + "T00:00:00");
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const appointments = getAppointments();
 
-    if (selectedDate < today) {
-        $("appointmentMsg").textContent = "Escolha uma data válida.";
+    const alreadyBooked = appointments.some(appointment =>
+        appointment.professionalId === professional.id &&
+        appointment.date === date &&
+        appointment.time === time
+    );
+
+    if (alreadyBooked || isAppointmentTimePast(date, time)) {
+        message.textContent =
+            "Esse horário não está mais disponível. Escolha outra opção.";
+
+        updateAvailableDates();
         return;
     }
 
-    $("appointmentMsg").textContent =
-        `Agendamento demonstrativo registrado para ${patient}. Especialidade: ${specialty}. Profissional: ${professional}. Data: ${selectedDate.toLocaleDateString("pt-BR")}. Horário: ${time}.`;
+    const newAppointment = {
+        id: Date.now(),
+        patient,
+        specialty,
+        professionalId: professional.id,
+        professional: professional.name,
+        unit: professional.unit,
+        date,
+        time,
+        createdAt: new Date().toISOString()
+    };
+
+    appointments.push(newAppointment);
+
+    if (!saveAppointments(appointments)) {
+        message.textContent =
+            "Não foi possível registrar o agendamento neste navegador.";
+
+        return;
+    }
+
+    message.textContent =
+        `Consulta demonstrativa confirmada!
+
+Paciente: ${patient}
+Especialidade: ${specialty}
+Profissional: ${professional.name}
+Unidade: ${professional.unit}
+Data: ${formatAppointmentDate(date)}
+Horário: ${time}`;
 
     this.reset();
+
+    fillProfessionalSelect();
 });
-
-(function setMinimumDate() {
-    const today = new Date();
-
-    const date = [
-        today.getFullYear(),
-        String(today.getMonth() + 1).padStart(2, "0"),
-        String(today.getDate()).padStart(2, "0")
-    ].join("-");
-
-    $("appointmentDate").min = date;
-})();
 
 /* =========================
    MEDICAMENTOS
 ========================= */
 
 const medicines = [
-    { name: "Paracetamol", quantity: 120, unit: "UBS Central" },
-    { name: "Dipirona", quantity: 85, unit: "UBS Vila Rami" },
-    { name: "Losartana", quantity: 60, unit: "Hospital Municipal" },
-    { name: "Ibuprofeno", quantity: 0, unit: "UBS Jardim do Lago" },
-    { name: "Omeprazol", quantity: 45, unit: "UBS Central" }
+    {
+        name: "Paracetamol",
+        quantity: 120,
+        unit: "UBS Central",
+        description: "Medicamento utilizado para alívio de dor e febre. Seu uso deve seguir orientação profissional."
+    },
+    {
+        name: "Dipirona",
+        quantity: 85,
+        unit: "UBS Vila Rami",
+        description: "Medicamento utilizado para alívio de dor e febre. Consulte um profissional sobre seu uso."
+    },
+    {
+        name: "Losartana",
+        quantity: 60,
+        unit: "Hospital Municipal",
+        description: "Medicamento utilizado no tratamento da pressão arterial, conforme prescrição."
+    },
+    {
+        name: "Ibuprofeno",
+        quantity: 0,
+        unit: "UBS Jardim do Lago",
+        description: "Medicamento com ação anti-inflamatória e analgésica. Seu uso exige orientação adequada."
+    },
+    {
+        name: "Omeprazol",
+        quantity: 45,
+        unit: "UBS Central",
+        description: "Medicamento utilizado em condições relacionadas à acidez do estômago, conforme orientação profissional."
+    }
 ];
 
 function showMedicines() {
     const message = medicines.map(item =>
-        `${item.name} - ${item.unit}: ${
+        `${item.name}
+
+Unidade: ${item.unit}
+Estoque demonstrativo: ${
             item.quantity > 0
                 ? item.quantity + " unidades"
                 : "Indisponível"
-        }`
-    ).join("\n\n");
+        }
 
-    info("Consulta de medicamentos", message);
+Informação: ${item.description}`
+    ).join("\n\n------------------------------\n\n");
+
+    info(
+        "Consulta de medicamentos",
+        `${message}
+
+ATENÇÃO: os nomes e quantidades são fictícios e servem apenas para demonstração do projeto. Confirme a disponibilidade diretamente na unidade de saúde. Não utilize medicamentos sem orientação profissional.`
+    );
+}
+
+/* =========================
+   VACINAÇÃO
+========================= */
+
+const vaccines = [
+    {
+        name: "BCG",
+        description: "Ajuda a proteger contra formas graves de tuberculose, especialmente na infância."
+    },
+    {
+        name: "Hepatite B",
+        description: "Protege contra a infecção pelo vírus da hepatite B."
+    },
+    {
+        name: "Tríplice viral",
+        description: "Protege contra sarampo, caxumba e rubéola."
+    },
+    {
+        name: "Influenza",
+        description: "Ajuda a proteger contra formas graves da gripe e suas complicações."
+    },
+    {
+        name: "Febre amarela",
+        description: "É indicada conforme as recomendações de vacinação e as características de cada pessoa."
+    },
+    {
+        name: "HPV",
+        description: "Ajuda a prevenir infecções por tipos de papilomavírus humano relacionados a diferentes doenças."
+    }
+];
+
+function showVaccines() {
+    const message = vaccines.map(vaccine =>
+        `${vaccine.name}
+
+${vaccine.description}`
+    ).join("\n\n------------------------------\n\n");
+
+    info(
+        "Informações sobre vacinação",
+        `${message}
+
+COMO CONSULTAR SUA VACINAÇÃO?
+
+• Procure uma Unidade Básica de Saúde (UBS).
+• Leve sua caderneta de vacinação, se tiver.
+• Pergunte sobre as vacinas indicadas para sua idade e situação de saúde.
+• Confirme os horários e a disponibilidade diretamente na unidade.
+
+Atenção: o calendário e as recomendações podem variar conforme a idade, histórico vacinal e orientações dos profissionais de saúde.`
+    );
+}
+
+/* =========================
+   PREVENÇÃO DE DOENÇAS
+========================= */
+
+const preventionTips = [
+    {
+        title: "Prevenção da dengue",
+        description: "Evite água parada em recipientes, mantenha caixas-d'água fechadas e cuide de vasos e pneus que possam acumular água."
+    },
+    {
+        title: "Higiene das mãos",
+        description: "Lave as mãos com água e sabão, especialmente antes das refeições, após usar o banheiro e ao chegar da rua."
+    },
+    {
+        title: "Vacinação em dia",
+        description: "A vacinação ajuda a prevenir doenças e reduzir o risco de complicações. Mantenha sua caderneta atualizada."
+    },
+    {
+        title: "Consultas preventivas",
+        description: "Procure os serviços de saúde para avaliações e orientações de acordo com suas necessidades."
+    },
+    {
+        title: "Cuidados com alimentos",
+        description: "Higienize frutas e verduras, mantenha os alimentos bem armazenados e utilize água própria para consumo."
+    },
+    {
+        title: "Proteção respiratória",
+        description: "Mantenha ambientes ventilados e adote cuidados de higiene ao tossir ou espirrar."
+    }
+];
+
+function showPrevention() {
+    const message = preventionTips.map((tip, index) =>
+        `${index + 1}. ${tip.title}
+
+${tip.description}`
+    ).join("\n\n------------------------------\n\n");
+
+    info(
+        "Prevenção de doenças",
+        `${message}
+
+A prevenção é uma forma importante de proteger a saúde individual e coletiva. Em caso de sintomas ou dúvidas, procure orientação em uma unidade de saúde.`
+    );
+}
+
+/* =========================
+   HÁBITOS SAUDÁVEIS
+========================= */
+
+const healthyHabits = [
+    {
+        title: "Alimentação equilibrada",
+        description: "Procure variar os alimentos e incluir frutas, verduras, legumes, feijão e outros alimentos nutritivos na rotina."
+    },
+    {
+        title: "Hidratação",
+        description: "Beba água ao longo do dia. A quantidade necessária pode variar conforme a idade, atividade e condições de saúde."
+    },
+    {
+        title: "Movimento e atividade física",
+        description: "Pratique atividades adequadas à sua rotina e às suas condições, como caminhadas, dança, brincadeiras ou esportes."
+    },
+    {
+        title: "Sono e descanso",
+        description: "Mantenha horários regulares para dormir e procure ter um ambiente tranquilo e confortável para descansar."
+    },
+    {
+        title: "Saúde emocional",
+        description: "Reserve momentos para lazer, convivência e descanso. Conversar com pessoas de confiança também pode ajudar."
+    },
+    {
+        title: "Acompanhamento de saúde",
+        description: "Realize consultas e exames quando recomendados por profissionais e mantenha sua vacinação atualizada."
+    }
+];
+
+function showHealthyHabits() {
+    const message = healthyHabits.map((habit, index) =>
+        `${index + 1}. ${habit.title}
+
+${habit.description}`
+    ).join("\n\n------------------------------\n\n");
+
+    info(
+        "Hábitos saudáveis",
+        `${message}
+
+Pequenas atitudes incorporadas à rotina podem contribuir para o bem-estar. Escolha hábitos possíveis para sua realidade e procure orientação profissional quando necessário.`
+    );
 }
 
 /* =========================
@@ -710,8 +1166,6 @@ function getInitials(name) {
         .join("")
         .toUpperCase();
 }
-
-/* CARREGAR DADOS NA TELA */
 
 function renderPatientData() {
     const patient = getPatientData();

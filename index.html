@@ -138,7 +138,6 @@
 
     <div id="professionals" class="professional-grid"></div>
 
-    <!-- ATENDIMENTO DOMICILIAR -->
     <div class="home-care" id="atendimentoDomiciliar">
         <div>
             <span class="tag">EM CASA</span>
@@ -179,70 +178,81 @@
     <div class="sub-title">
         <span class="tag">AGENDAMENTO</span>
         <h2>Marque sua consulta</h2>
+        <p>Escolha a especialidade, o profissional e consulte os dias e horários disponíveis.</p>
     </div>
 
     <form id="appointmentForm" class="appointment">
-        <input id="patient" required placeholder="Nome do paciente">
 
-        <select id="specialty">
-            <option>Clínica Geral</option>
-            <option>Cardiologia</option>
-            <option>Pediatria</option>
-            <option>Dermatologia</option>
-            <option>Ortopedia</option>
+        <label for="patient">Nome do paciente</label>
+        <input id="patient" type="text" maxlength="100" required placeholder="Nome completo">
+
+        <label for="specialty">Especialidade</label>
+        <select id="specialty" required>
+            <option value="Clínica Geral">Clínica Geral</option>
+            <option value="Cardiologia">Cardiologia</option>
+            <option value="Pediatria">Pediatria</option>
+            <option value="Dermatologia">Dermatologia</option>
+            <option value="Ortopedia">Ortopedia</option>
         </select>
 
-        <select id="professionalSelect"></select>
+        <label for="professionalSelect">Profissional</label>
+        <select id="professionalSelect" required>
+            <option value="">Selecione um profissional</option>
+        </select>
 
-        <input id="appointmentDate" required type="date">
+        <label for="appointmentDate">Dias disponíveis</label>
+        <select id="appointmentDate" required disabled>
+            <option value="">Selecione primeiro um profissional</option>
+        </select>
 
-        <select id="appointmentTime">
-            <option>08:00</option>
-            <option>09:30</option>
-            <option>11:00</option>
-            <option>14:00</option>
-            <option>15:30</option>
-            <option>17:00</option>
+        <label for="appointmentTime">Horários disponíveis</label>
+        <select id="appointmentTime" required disabled>
+            <option value="">Selecione primeiro uma data</option>
         </select>
 
         <button class="btn" type="submit">Confirmar agendamento</button>
+
         <p id="appointmentMsg" aria-live="polite"></p>
+
+        <small>* Agenda demonstrativa do projeto VivaSUS.</small>
     </form>
 </section>
 
+<!-- INFORMAÇÕES DE SAÚDE -->
 <section id="saude" class="section">
     <div class="section-head center">
         <span class="tag">SAÚDE</span>
         <h2>Informação para cuidar de você</h2>
+        <p>Encontre conteúdos educativos e informações importantes para cuidar da sua saúde.</p>
     </div>
 
     <div class="health-grid">
         <article>
             <span>💊</span>
             <h3>Medicamentos</h3>
-            <p>Veja onde determinados medicamentos estão disponíveis.</p>
+            <p>Veja informações sobre medicamentos e consulte o estoque demonstrativo das unidades.</p>
             <button type="button" onclick="showMedicines()">Consultar estoque</button>
         </article>
 
         <article>
             <span>💉</span>
             <h3>Vacinação</h3>
-            <p>Consulte informações sobre vacinação.</p>
-            <button type="button" onclick="info('Vacinação','Consulte a unidade de saúde para confirmar vacinas, horários e disponibilidade.')">Consultar</button>
+            <p>Conheça algumas vacinas e saiba como consultar sua situação vacinal.</p>
+            <button type="button" onclick="showVaccines()">Consultar vacinação</button>
         </article>
 
         <article>
             <span>🛡️</span>
             <h3>Prevenção de doenças</h3>
-            <p>Informações educativas sobre prevenção.</p>
-            <button type="button" onclick="info('Prevenção','Conteúdos educativos sobre prevenção de doenças.')">Acessar</button>
+            <p>Confira orientações educativas para prevenção e proteção da saúde.</p>
+            <button type="button" onclick="showPrevention()">Acessar prevenção</button>
         </article>
 
         <article>
             <span>🥗</span>
             <h3>Hábitos saudáveis</h3>
-            <p>Conteúdos para incentivar uma rotina de cuidado e bem-estar.</p>
-            <button type="button" onclick="info('Hábitos saudáveis','Alimentação variada, movimento adequado, sono e acompanhamento de saúde contribuem para o bem-estar.')">Saiba mais</button>
+            <p>Descubra atitudes que contribuem para uma rotina com mais saúde e bem-estar.</p>
+            <button type="button" onclick="showHealthyHabits()">Saiba mais</button>
         </article>
     </div>
 </section>
